@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35728.132
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarvedRock.Api", "CarvedRock.Api\CarvedRock.Api.csproj", "{7D0A0B5C-004D-4754-B967-7C00B8D2D19A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarvedRock.Data", "CarvedRock.Data\CarvedRock.Data.csproj", "{52EF6AE2-20BF-46A1-A79F-C3F1C1C1D13E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarvedRock.Core", "CarvedRock.Core\CarvedRock.Core.csproj", "{B2FA8928-7D44-45D2-AF54-5F5C3264ADBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarvedRock.Domain", "CarvedRock.Domain\CarvedRock.Domain.csproj", "{9709D33A-D121-4BC4-9FC3-16FF0CF55F09}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7D0A0B5C-004D-4754-B967-7C00B8D2D19A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D0A0B5C-004D-4754-B967-7C00B8D2D19A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D0A0B5C-004D-4754-B967-7C00B8D2D19A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D0A0B5C-004D-4754-B967-7C00B8D2D19A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52EF6AE2-20BF-46A1-A79F-C3F1C1C1D13E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52EF6AE2-20BF-46A1-A79F-C3F1C1C1D13E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52EF6AE2-20BF-46A1-A79F-C3F1C1C1D13E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52EF6AE2-20BF-46A1-A79F-C3F1C1C1D13E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2FA8928-7D44-45D2-AF54-5F5C3264ADBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2FA8928-7D44-45D2-AF54-5F5C3264ADBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2FA8928-7D44-45D2-AF54-5F5C3264ADBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2FA8928-7D44-45D2-AF54-5F5C3264ADBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9709D33A-D121-4BC4-9FC3-16FF0CF55F09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9709D33A-D121-4BC4-9FC3-16FF0CF55F09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9709D33A-D121-4BC4-9FC3-16FF0CF55F09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9709D33A-D121-4BC4-9FC3-16FF0CF55F09}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
