@@ -33,7 +33,8 @@ builder.Host.UseSerilog((context, loggerConfig) =>
         .Enrich.WithExceptionDetails()
         .Enrich.FromLogContext()
         .Enrich.With<ActivityEnricher>()
-        .WriteTo.Seq(context.Configuration["seqUrl"]);
+        .WriteTo.Console();
+       // .WriteTo.Seq(context.Configuration["seqUrl"]);
 });
 
 builder.Services.AddProblemDetails(options =>
@@ -98,7 +99,7 @@ app.UseSerilogRequestLogging(options =>
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    SetupDevelopment();   
 }
 
 app.UseHttpsRedirection();
@@ -108,3 +109,15 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+void SetupDevelopment()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+        var context = services.GetRequiredService<CarvedRockContext>();
+        context.MigrateAndCreateData();
+    }
+    app.MapOpenApi();
+}
