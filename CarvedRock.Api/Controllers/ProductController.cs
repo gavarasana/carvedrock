@@ -10,13 +10,14 @@ namespace CarvedRock.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController(ILogger<ProductController> logger, IProductService productService,
-            NewProductValidator validationRules, IWebHostEnvironment hostEnvironment) : ControllerBase
+            NewProductValidator newProductValidator, IWebHostEnvironment hostEnvironment) : ControllerBase
     {
 
         [HttpGet()]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<ProductModel>>> GetAll([FromQuery(Name = "Category")] string category = "all")
         {
+            logger.LogInformation("Retrieving all products");
             var products = await productService.GetProductsForCategoryAsync(category);
             return Ok(products);
         }
@@ -26,6 +27,7 @@ namespace CarvedRock.Api.Controllers
         [ProducesResponseType(typeof(ProductModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetProductById(int id)
         {
+            logger.LogInformation("Retrieving product by id {0}", id);
             var product = await productService.GetProductByIdAsync(id);
             if (product == null)
             {
@@ -39,7 +41,8 @@ namespace CarvedRock.Api.Controllers
         [ProducesResponseType<ProblemDetails>(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateProduct([FromBody] NewProductModel product)
         {
-            var validationResult = await validationRules.ValidateAsync(product);
+            logger.LogInformation("Validating product properties.");
+            var validationResult = await newProductValidator.ValidateAsync(product);
             if (!validationResult.IsValid)
             {
                 return BadRequest(validationResult.Errors);

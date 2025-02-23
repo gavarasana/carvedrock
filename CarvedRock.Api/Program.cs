@@ -20,7 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi("internal");
 
 builder.Services.AddHealthChecks()
         .AddDbContextCheck<CarvedRockContext>();
@@ -92,7 +92,7 @@ app.UseSerilogRequestLogging(options =>
 {
     options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
     {
-        diagnosticContext.Set("client_id", httpContext.User.Claims.FirstOrDefault(c => c.Type == "client_id")?.Value);
+        diagnosticContext.Set("client_id", httpContext.User.Claims.FirstOrDefault(c => c.Type == "client_id")?.Value ?? "Undefined");
     };
 });
 
@@ -101,6 +101,8 @@ if (app.Environment.IsDevelopment())
 {
     SetupDevelopment();   
 }
+
+app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 
@@ -120,4 +122,9 @@ void SetupDevelopment()
         context.MigrateAndCreateData();
     }
     app.MapOpenApi();
+
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/openapi/internal.json", "internal");
+    });
 }
