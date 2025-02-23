@@ -99,10 +99,13 @@ app.UseSerilogRequestLogging(options =>
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    SetupDevelopment();   
+    SetupDevelopment();
+}else
+{
+    app.UseExceptionHandler();
 }
 
-app.UseExceptionHandler();
+    
 
 app.UseHttpsRedirection();
 
@@ -127,4 +130,6 @@ void SetupDevelopment()
     {
         options.SwaggerEndpoint("/openapi/internal.json", "internal");
     });
+
+    app.UseDeveloperExceptionPage();
 }
