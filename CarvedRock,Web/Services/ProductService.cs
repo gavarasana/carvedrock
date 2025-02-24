@@ -5,9 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
 using System.Text.Json;
 
-namespace CarvedRock_Web
+namespace CarvedRock_Web.Services
 {
-    public class ProductService(ILogger<ProductService> logger, HttpClient httpClient, IHttpContextAccessor httpContextAccessor) : IProductService
+    public class ProductService(ILogger<ProductService> logger, HttpClient httpClient, 
+                IHttpContextAccessor httpContextAccessor) : IProductService
     {
         public async Task<ProductModel> CreateProductAsync(NewProductModel newProduct)
         {
