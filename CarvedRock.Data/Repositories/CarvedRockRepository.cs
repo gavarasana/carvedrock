@@ -37,7 +37,11 @@ namespace CarvedRock.Data.Repositories
                 {
                     throw new Exception(string.Concat("Simulated exception for category {0}", category));
                 }
-                return await carvedRockContext.Products.Where(p => p.Category == category || p.Category == "all").ToListAsync();
+                if (category == "all")
+                {
+                    return await carvedRockContext.Products.ToListAsync();
+                }
+                return await carvedRockContext.Products.Where(p => p.Category == category).ToListAsync();
             }
             catch (Exception ex)
             {

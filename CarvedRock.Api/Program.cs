@@ -20,7 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi("internal");
 
 builder.Services.AddHealthChecks()
         .AddDbContextCheck<CarvedRockContext>();
@@ -33,7 +33,8 @@ builder.Host.UseSerilog((context, loggerConfig) =>
         .Enrich.WithExceptionDetails()
         .Enrich.FromLogContext()
         .Enrich.With<ActivityEnricher>()
-        .WriteTo.Seq(context.Configuration["seqUrl"]);
+        .WriteTo.Console();
+       // .WriteTo.Seq(context.Configuration["seqUrl"]);
 });
 
 builder.Services.AddProblemDetails(options =>
@@ -91,15 +92,20 @@ app.UseSerilogRequestLogging(options =>
 {
     options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
     {
-        diagnosticContext.Set("client_id", httpContext.User.Claims.FirstOrDefault(c => c.Type == "client_id")?.Value);
+        diagnosticContext.Set("client_id", httpContext.User.Claims.FirstOrDefault(c => c.Type == "client_id")?.Value ?? "Undefined");
     };
 });
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    SetupDevelopment();
+}else
+{
+    app.UseExceptionHandler();
 }
+
+    
 
 app.UseHttpsRedirection();
 
@@ -108,3 +114,22 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+void SetupDevelopment()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+        var context = services.GetRequiredService<CarvedRockContext>();
+        context.MigrateAndCreateData();
+    }
+    app.MapOpenApi();
+
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/openapi/internal.json", "internal");
+    });
+
+    app.UseDeveloperExceptionPage();
+}
