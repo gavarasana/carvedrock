@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Net.Http.Headers;
 using Serilog;
 using Serilog.Enrichers.Span;
 using Serilog.Exceptions;
@@ -27,6 +28,13 @@ builder.Host.UseSerilog((context, loggerConfig) =>
             loggerConfig.WriteTo.Seq(seqUrl);
         }
     });
+
+builder.Services.AddHttpClient("CarvedRockApi", client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["CarvedRock:ApiBaseUrl"]);
+    client.DefaultRequestHeaders.Clear();
+    client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+});
 
 //Clear out legacy inbound claims mapping
 JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
